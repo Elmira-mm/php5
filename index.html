@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Каталог товарів — AJAX — Wellness Store</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="hero">
+        <span class="eyebrow">Практична робота №5 · Wellness Edit</span>
+        <h1>Каталог <em>без перезавантажень</em></h1>
+        <p class="subtitle">Список і пошук працюють через fetch() до JSON-ендпоінтів, без жодного перезавантаження сторінки.</p>
+    </div>
+
+    <div id="page-message" class="alert" hidden></div>
+
+    <div class="card form-card">
+        <div class="field">
+            <label for="search">Пошук за назвою товару</label>
+            <input type="text" id="search" placeholder="Напр. matcha" autocomplete="off">
+        </div>
+    </div>
+
+    <div class="card">
+        <table>
+            <thead>
+                <tr>
+                    <th>Товар</th>
+                    <th>SKU</th>
+                    <th>Ціна</th>
+                    <th>Залишок, шт.</th>
+                    <th>Статус</th>
+                </tr>
+            </thead>
+            <tbody id="results">
+                <tr><td colspan="5" class="empty-row">Завантаження…</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card form-card">
+        <h2 class="section-title">Додати товар</h2>
+        <form id="add-form" novalidate>
+            <div class="field">
+                <label for="name">Назва товару</label>
+                <input type="text" id="name" name="name" required minlength="2">
+                <span class="error" data-error-for="name"></span>
+            </div>
+
+            <div class="field-row">
+                <div class="field">
+                    <label for="price">Ціна, грн</label>
+                    <input type="number" id="price" name="price" required min="0.01" step="0.01">
+                    <span class="error" data-error-for="price"></span>
+                </div>
+
+                <div class="field">
+                    <label for="stock">Залишок, шт.</label>
+                    <input type="number" id="stock" name="stock" required min="0" step="1">
+                    <span class="error" data-error-for="stock"></span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="sku">SKU (формат ABC-123)</label>
+                <input type="text" id="sku" name="sku" required pattern="[A-Za-z]+-\d+" placeholder="MAT-045">
+                <span class="error" data-error-for="sku"></span>
+            </div>
+
+            <button type="submit" class="btn-primary" id="add-submit">Додати товар</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
