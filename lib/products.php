@@ -1,22 +1,11 @@
 <?php
 declare(strict_types=1);
 
-/**
- * Функції для роботи з таблицею products (той самий домен, що й у практикумі №4).
- * Використовуються з JSON-ендпоінтів api_list.php і api_add.php.
- */
-
-/**
- * Усі товари.
- */
 function getAllProducts(PDO $pdo): array
 {
     return $pdo->query('SELECT * FROM products ORDER BY id')->fetchAll();
 }
 
-/**
- * Крок 4. Жива фільтрація за назвою товару (LIKE-пошук, підготовлений запит).
- */
 function searchProductsByName(PDO $pdo, string $query): array
 {
     $stmt = $pdo->prepare('SELECT * FROM products WHERE name LIKE :query ORDER BY id');
@@ -25,9 +14,6 @@ function searchProductsByName(PDO $pdo, string $query): array
     return $stmt->fetchAll();
 }
 
-/**
- * Один товар за id — потрібен одразу після INSERT, щоб повернути повний рядок у JSON.
- */
 function getProductById(PDO $pdo, int $id): ?array
 {
     $stmt = $pdo->prepare('SELECT * FROM products WHERE id = :id');
@@ -37,11 +23,6 @@ function getProductById(PDO $pdo, int $id): ?array
     return $row !== false ? $row : null;
 }
 
-/**
- * Крок 5. Додавання товару. Повертає структурований результат:
- * ['success' => bool, 'product' => array|null, 'errors' => array]
- * замість того, щоб виводити HTML — цей результат серіалізується в JSON у api_add.php.
- */
 function addProduct(PDO $pdo, string $name, float $price, string $sku, int $stock): array
 {
     $stmt = $pdo->prepare(
@@ -69,9 +50,6 @@ function addProduct(PDO $pdo, string $name, float $price, string $sku, int $stoc
     return ['success' => true, 'product' => $product, 'errors' => []];
 }
 
-/**
- * Валідація полів — ті самі правила, що й у попередніх практикумах.
- */
 function validateProductInput(string $name, string $price, string $sku, string $stock): array
 {
     $errors = [];
